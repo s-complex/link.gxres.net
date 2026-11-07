@@ -1,5 +1,3 @@
-@stylex;
-
 * {
 	margin: 0;
 	padding: 0;
@@ -14,15 +12,13 @@
 }
 
 html {
-	font-family: system-ui, sans-serif;
+	font-family:
+		system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	color-scheme: light dark;
 }
 
 body {
-	background-image: linear-gradient(to right,
-			#bfdbfe 5%,
-			#bae6fd 30%,
-			#a5f3fc 80%);
+	background-image: linear-gradient(to right, #bfdbfe 5%, #bae6fd 30%, #a5f3fc 80%);
 }
 
 a {
@@ -36,10 +32,7 @@ a:hover {
 
 @media (prefers-color-scheme: dark) {
 	body {
-		background-image: linear-gradient(to right,
-				#1e40af 5%,
-				#075985 30%,
-				#155e75 80%);
+		background-image: linear-gradient(to right, #1e40af 5%, #075985 30%, #155e75 80%);
 	}
 
 	a {

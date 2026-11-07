@@ -1,7 +1,2 @@
 allowBuilds:
   '@swc/core': true
-  workerd: true
-  esbuild: false
-  sharp: true
-minimumReleaseAgeExclude:
-  - svelte@5.56.2

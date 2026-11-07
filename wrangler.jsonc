@@ -1,7 +1,7 @@
 {
     "name": "hyperlink-redirect",
-    "compatibility_date": "2026-05-26",
+    "compatibility_date": "2026-11-08",
     "assets": {
-        "directory": "./build"
+        "directory": "./out"
     }
 }

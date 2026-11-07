@@ -4,8 +4,8 @@ Also known as "Hyperlink Redirect".
 
 ## Dependencies
 
-- [SvelteKit](https://kit.svelte.dev/)
-- [UnoCSS](https://unocss.dev)
+- [Next.js](https://nextjs.org/)
+- [StyleX](https://stylexjs.com/)
 - [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- Fluent Emoji Flat by Microsoft
+- [Oxfmt](https://oxc.rs/)
+- Fluent Emoji Flat _by Microsoft_

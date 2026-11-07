@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [24]
-        pnpm-version: [11]
+        node-version: [26]
+        pnpm-version: [12]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,4 +33,4 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           apiToken: ${{ secrets.CF_API_TOKEN }}
           command: deploy
-          wranglerVersion: '4.95.0'
+          wranglerVersion: '4.150.0'
