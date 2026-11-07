@@ -2,6 +2,15 @@
 
 import { create, props } from '@stylexjs/stylex';
 import { useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
+
+const directRedirectUrls = [
+	'https://www.gxres.net',
+	'https://blog.gxres.net',
+	'https://library.gxres.net',
+	'https://sirvr.win'
+];
+const selfRedirectPrefix = 'https://link.gxres.net';
 
 const styles = create({
 	illustration: {
@@ -28,7 +37,7 @@ function getExternalUrl(value: string | null): string | undefined {
 
 	try {
 		const url = new URL(value);
-		return url.protocol === 'http:' || url.protocol === 'https:' ? value : undefined;
+		return url.protocol === 'https:' ? value : undefined;
 	} catch {
 		return undefined;
 	}
@@ -93,18 +102,37 @@ function StatusIllustration({ hasLink }: { hasLink: boolean }) {
 
 export default function RedirectContent() {
 	const searchParams = useSearchParams();
-	const target = getExternalUrl(searchParams.get('target'));
+	const rawTarget = searchParams.get('target');
+	const isSelfRedirect = rawTarget?.toLowerCase().startsWith(selfRedirectPrefix) ?? false;
+	const target = getExternalUrl(rawTarget);
+	const shouldRedirect = target !== undefined && directRedirectUrls.includes(target);
 
-	if (!target) {
+	useEffect(() => {
+		if (shouldRedirect && target) {
+			window.location.replace(target);
+		}
+	}, [shouldRedirect, target]);
+
+	if (shouldRedirect) {
+		return <p>Redirecting...</p>;
+	}
+
+	if (target && !isSelfRedirect) {
 		return (
 			<>
-				<StatusIllustration hasLink={false} />
+				<StatusIllustration hasLink />
 				<section {...props(styles.content)}>
-					<h1 {...props(styles.title)}>你怎么在这里？</h1>
-					<p>请确保携带了正确的 Query Params 访问本站。</p>
-					<a href="https://sirvr.win" rel="noopener noreferrer">
-						← 返回 Sliver Complex
+					<h1 {...props(styles.title)}>即将访问外部网站</h1>
+					<p>你正在尝试访问下述链接：</p>
+					<a href={target} rel="noopener noreferrer">
+						{target}
 					</a>
+					<div>
+						<p {...props(styles.hint)}>
+							注意：该网站不属于 Sliver Complex，我们无法保证其可用和可信状况。
+						</p>
+						<p {...props(styles.hint)}>请经过慎重思考后，点击该链接继续访问。</p>
+					</div>
 				</section>
 			</>
 		);
@@ -112,19 +140,22 @@ export default function RedirectContent() {
 
 	return (
 		<>
-			<StatusIllustration hasLink />
+			<StatusIllustration hasLink={false} />
 			<section {...props(styles.content)}>
-				<h1 {...props(styles.title)}>即将访问外部网站</h1>
-				<p>你正在尝试访问下述链接：</p>
-				<a href={target} rel="noopener noreferrer">
-					{target}
-				</a>
-				<div>
-					<p {...props(styles.hint)}>
-						注意：该网站不属于 Sliver Complex，我们无法保证其可用和可信状况。
-					</p>
-					<p {...props(styles.hint)}>请经过慎重思考后，点击该链接继续访问。</p>
-				</div>
+				{isSelfRedirect ? (
+					<>
+						<h1 {...props(styles.title)}>Target to Myself???</h1>
+						<p>你正在尝试原地跳转。</p>
+					</>
+				) : (
+					<>
+						<h1 {...props(styles.title)}>你怎么在这里？</h1>
+						<p>请确保携带了正确的 Query Params 访问本站。</p>
+						<a href="https://sirvr.win" rel="noopener noreferrer">
+							← 返回 Sliver Complex
+						</a>
+					</>
+				)}
 			</section>
 		</>
 	);

@@ -9,6 +9,7 @@ const pageStyles = create({
 		width: '100%',
 		margin: '1rem',
 		padding: '1rem',
+		minHeight: '12rem',
 		borderRadius: '0.5rem',
 		backgroundColor: {
 			default: '#fff',
