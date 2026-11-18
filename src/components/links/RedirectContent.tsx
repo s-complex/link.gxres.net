@@ -43,6 +43,15 @@ function getExternalUrl(value: string | null): string | undefined {
 	}
 }
 
+function getDirectRedirectUrl(value: string | undefined): string | undefined {
+	if (!value) {
+		return undefined;
+	}
+
+	const normalizedValue = value.replace(/\/+$/, '');
+	return directRedirectUrls.includes(normalizedValue) ? value : undefined;
+}
+
 function StatusIllustration({ hasLink }: { hasLink: boolean }) {
 	return (
 		<div {...props(styles.illustration)}>
@@ -105,7 +114,8 @@ export default function RedirectContent() {
 	const rawTarget = searchParams.get('target');
 	const isSelfRedirect = rawTarget?.toLowerCase().startsWith(selfRedirectPrefix) ?? false;
 	const target = getExternalUrl(rawTarget);
-	const shouldRedirect = target !== undefined && directRedirectUrls.includes(target);
+	const directRedirectTarget = getDirectRedirectUrl(target);
+	const shouldRedirect = directRedirectTarget !== undefined;
 
 	useEffect(() => {
 		if (shouldRedirect && target) {
